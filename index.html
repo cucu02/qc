@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f7f8fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 class="text-center mb-4">Login</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="showPassword">
+                <label class="form-check-label" for="showPassword">Show Password</label>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">LOGIN</button>
+        </form>
+        <div class="d-flex justify-content-between mt-3">
+            <a href="#">Forgot Password?</a>
+            <a href="#">Sign up</a>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore-compat.js"></script>
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Konfigurasi Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCBF2gLqtLL6msiugN7fuMlMK5278rJpsQ",
+            authDomain: "quickcount-9e634.firebaseapp.com",
+            projectId: "quickcount-9e634",
+            storageBucket: "quickcount-9e634.appspot.com",
+            messagingSenderId: "855202720175",
+            appId: "1:855202720175:web:cc9ead847ec6c67b70275a"
+        };
+
+        // Inisialisasi Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Show/hide password functionality
+        const showPasswordCheckbox = document.getElementById('showPassword');
+        const passwordField = document.getElementById('password');
+        
+        showPasswordCheckbox.addEventListener('change', () => {
+            if (showPasswordCheckbox.checked) {
+                passwordField.type = 'text';
+            } else {
+                passwordField.type = 'password';
+            }
+        });
+
+        const loginForm = document.getElementById('loginForm');
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                console.log("Mencari user berdasarkan username:", username);
+                const userSnapshot = await db.collection('users').where('username', '==', username).get();
+
+                if (!userSnapshot.empty) {
+                    console.log("User ditemukan, memeriksa password...");
+                    const userDoc = userSnapshot.docs[0];
+                    const userData = userDoc.data();
+
+                    // Bandingkan password secara langsung (plain text comparison)
+                    if (password === userData.password) {
+                        console.log('Password benar, redirect ke halaman selanjutnya.');
+                        alert('Login berhasil, selamat datang ' + userData.realname);
+
+                        // Simpan status login dan data pengguna ke cookies
+                        document.cookie = `isLoggedIn=true; path=/; max-age=86400`; // Cookie valid selama 1 hari
+                        document.cookie = `realname=${userData.realname}; path=/; max-age=86400`;
+                        document.cookie = `kecamatan=${userData.kecamatan}; path=/; max-age=86400`;
+                        document.cookie = `nagari=${userData.nagari}; path=/; max-age=86400`;
+
+                        // Redirect ke halaman welcome atau dashboard
+                        window.location.href = "welcome.html";
+                    } else {
+                        console.error('Password salah.');
+                        alert('Password salah. Silakan coba lagi.');
+                    }
+                } else {
+                    console.error('Username tidak ditemukan.');
+                    alert('Username tidak ditemukan.');
+                }
+            } catch (error) {
+                console.error('Error saat login:', error);
+                alert('Terjadi kesalahan saat login. Silakan coba lagi.');
+            }
+        });
+    </script>
+</body>
+</html>
