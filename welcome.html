@@ -58,69 +58,7 @@
         <div class="content-wrapper">
             <section class="content">
                 <div class="container-fluid">
-                    <div class="row" id="welcome-section">
-                        <div class="col-12">
-                            <h1 id="welcome-message">Welcome to the Dashboard</h1>
-                            <p>Here is some information about the application...</p>
-                        </div>
-                    </div>
-                    <div class="row" id="data-section" style="display: none;">
-                        <div class="col-12">
-                            <h2>Data List</h2>
-                            <table class="table table-bordered" id="data-table">
-                                <thead>
-                                    <tr>
-                                        <th>Nomor TPS</th>
-                                        <th>Jumlah DPT</th>
-                                        <th>Suara Sah</th>
-                                        <th>Suara Tidak Sah</th>
-                                        <th>Saksi</th>
-                                        <th>Waktu</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- Data will be populated here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row" id="input-section" style="display: none;">
-                        <div class="col-12">
-                            <h2>Input Data</h2>
-                            <form id="input-form">
-                                <div class="form-group">
-                                    <label for="nomor_tps">Nomor TPS</label>
-                                    <input type="text" class="form-control" id="nomor_tps" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="jumlah_dpt">Jumlah DPT</label>
-                                    <input type="number" class="form-control" id="jumlah_dpt" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="jumlah_suara_sah">Jumlah Suara Sah</label>
-                                    <input type="number" class="form-control" id="jumlah_suara_sah" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="jumlah_suara_tidak_sah">Jumlah Suara Tidak Sah</label>
-                                    <input type="number" class="form-control" id="jumlah_suara_tidak_sah" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="saksi">Saksi</label>
-                                    <input type="text" class="form-control" id="saksi" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="suara_01">Suara 01</label>
-                                    <input type="number" class="form-control" id="suara_01" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="suara_02">Suara 02</label>
-                                    <input type="number" class="form-control" id="suara_02" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-                        </div>
-                    </div>
+                    <!-- Isi konten -->
                 </div>
             </section>
         </div>
@@ -128,139 +66,15 @@
         <aside class="control-sidebar control-sidebar-dark"></aside>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore-compat.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
+
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCBF2gLqtLL6msiugN7fuMlMK5278rJpsQ",
-            authDomain: "quickcount-9e634.firebaseapp.com",
-            projectId: "quickcount-9e634",
-            storageBucket: "quickcount-9e634.appspot.com",
-            messagingSenderId: "855202720175",
-            appId: "1:855202720175:web:cc9ead847ec6c67b70275a"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        function logout() {
-            document.cookie = "isLoggedIn=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-            document.cookie = "realname=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-            document.cookie = "kecamatan=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-            document.cookie = "nagari=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-            alert('Anda telah logout.');
-            window.location.href = "index.html";
-        }
-
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-        }
-
-        const isLoggedIn = getCookie('isLoggedIn');
-        const realname = getCookie('realname');
-        const kecamatan = getCookie('kecamatan');
-        const nagari = getCookie('nagari');
-
-        if (isLoggedIn !== 'true') {
-            window.location.href = "index.html";
-        } else {
-            document.getElementById('welcome-message').innerText = `Welcome, ${realname}`;
-        }
-
-        document.getElementById('dashboard-menu').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('welcome-section').style.display = 'block';
-            document.getElementById('data-section').style.display = 'none';
-            document.getElementById('input-section').style.display = 'none';
+        // Inisialisasi pushmenu
+        document.addEventListener('DOMContentLoaded', function () {
+            $('[data-widget="pushmenu"]').PushMenu();
         });
-
-        document.getElementById('data-menu').addEventListener('click', async (e) => {
-            e.preventDefault();
-            document.getElementById('welcome-section').style.display = 'none';
-            document.getElementById('input-section').style.display = 'none';
-            const dataSection = document.getElementById('data-section');
-            const dataTableBody = document.querySelector('#data-table tbody');
-
-            dataTableBody.innerHTML = '';
-
-            try {
-                const querySnapshot = await db.collection('suara').where('koordinator_saksi', '==', realname).get();
-                
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const date = data.waktu?.toDate();
-                    const formattedDate = date ? date.toLocaleString() : 'Invalid Date';
-
-                    const row = `
-                        <tr>
-                            <td>${data.nomor_tps}</td>
-                            <td>${data.jumlah_dpt}</td>
-                            <td>${data.jumlah_suara_sah}</td>
-                            <td>${data.jumlah_suara_tidak_sah}</td>
-                            <td>${data.saksi}</td>
-                            <td>${formattedDate}</td>
-                            <td><button class="btn btn-warning btn-sm" onclick="editData('${doc.id}')">Edit</button></td>
-                        </tr>
-                    `;
-                    dataTableBody.innerHTML += row;
-                });
-
-                dataSection.style.display = 'block';
-            } catch (error) {
-                console.error('Error saat mengambil data:', error);
-                alert('Gagal mengambil data. Silakan coba lagi.');
-            }
-        });
-
-        document.getElementById('input-menu').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('welcome-section').style.display = 'none';
-            document.getElementById('data-section').style.display = 'none';
-            document.getElementById('input-section').style.display = 'block';
-        });
-
-        document.getElementById('input-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const nomorTPS = document.getElementById('nomor_tps').value;
-            const jumlahDPT = document.getElementById('jumlah_dpt').value;
-            const jumlahSuaraSah = document.getElementById('jumlah_suara_sah').value;
-            const jumlahSuaraTidakSah = document.getElementById('jumlah_suara_tidak_sah').value;
-            const saksi = document.getElementById('saksi').value;
-            const suara01 = document.getElementById('suara_01').value;
-            const suara02 = document.getElementById('suara_02').value;
-
-            try {
-                await db.collection('suara').add({
-                    nomor_tps: nomorTPS,
-                    jumlah_dpt: jumlahDPT,
-                    jumlah_suara_sah: jumlahSuaraSah,
-                    jumlah_suara_tidak_sah: jumlahSuaraTidakSah,
-                    saksi: saksi,
-                    suara_01: suara01,
-                    suara_02: suara02,
-                    kecamatan: kecamatan,
-                    nagari: nagari,
-                    koordinator_saksi: realname,
-                    waktu: firebase.firestore.FieldValue.serverTimestamp()
-                });
-
-                alert('Data berhasil disimpan!');
-                document.getElementById('input-form').reset();
-            } catch (error) {
-                console.error('Error saat menyimpan data:', error);
-                alert('Gagal menyimpan data. Silakan coba lagi.');
-            }
-        });
-
-        function editData(id) {
-            // Implementasi logika untuk mengedit data
-            alert(`Fitur edit untuk ID: ${id} belum diimplementasikan.`);
-        }
     </script>
 </body>
 </html>
