@@ -3,79 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <!-- AdminLTE CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="hold-transition sidebar-mini">
-    <div class="wrapper">
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-                </li>
-            </ul>
-        </nav>
-
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="#" class="brand-link">
-                <span class="brand-text font-weight-light">AdminLTE Dashboard</span>
-            </a>
-            <div class="sidebar">
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" id="dashboard-menu">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" id="data-menu">
-                                <i class="nav-icon fas fa-database"></i>
-                                <p>Data</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" id="input-menu">
-                                <i class="nav-icon fas fa-edit"></i>
-                                <p>Input</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" onclick="logout()">
-                                <i class="nav-icon fas fa-sign-out-alt"></i>
-                                <p>Logout</p>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="menu-icon">
+                <!-- Menu icon can be an SVG or FontAwesome icon -->
+                <i class="fas fa-bars"></i>
             </div>
-        </aside>
-
-        <div class="content-wrapper">
-            <section class="content">
-                <div class="container-fluid">
-                    <!-- Your content goes here -->
-                </div>
-            </section>
+            <div class="profile-image">
+                <!-- Profile picture or any SVG illustration -->
+                <img src="profile.png" alt="Profile Picture">
+            </div>
         </div>
 
-        <aside class="control-sidebar control-sidebar-dark"></aside>
+        <div class="task-section">
+            <div class="create-task">
+                <h2>Create New Task</h2>
+                <p>You can create new tasks here</p>
+                <button class="add-task-btn">+</button>
+            </div>
+
+            <div class="task-list">
+                <h3>Ongoing Task</h3>
+                <ul>
+                    <li>
+                        <div class="task-item">
+                            <div class="task-avatar">
+                                <img src="avatar1.png" alt="Avatar">
+                            </div>
+                            <div class="task-info">
+                                <p>Call with Jonathon Ruslan</p>
+                                <small>Jan 20, 2020 - 9 AM - 11 AM</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="task-item">
+                            <div class="task-avatar">
+                                <img src="avatar2.png" alt="Avatar">
+                            </div>
+                            <div class="task-info">
+                                <p>Meet with Vlad Ermakov</p>
+                                <small>Jan 21, 2020 - 9 AM - 10 AM</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="task-item">
+                            <div class="task-avatar">
+                                <img src="avatar3.png" alt="Avatar">
+                            </div>
+                            <div class="task-info">
+                                <p>Collaboration with Sam</p>
+                                <small>Jan 23, 2020 - 1 PM - 5 AM</small>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Ensure the push menu is activated
-            $('[data-widget="pushmenu"]').PushMenu();
-        });
-    </script>
 </body>
 </html>
