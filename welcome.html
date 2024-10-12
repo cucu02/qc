@@ -13,14 +13,35 @@
         </div>
         <h1 class="welcome-message">Welcome, <span id="realname">[Your Name]</span>!</h1>
         <p id="data-count-message">Loading data...</p>
-        <button class="entry-button">Entry Data</button>
+
+        <button class="entry-button" onclick="toggleEntryForm()">Entry Data</button>
+
+        <!-- Form untuk input data -->
+        <div id="entry-form-container" style="display:none;">
+            <h3>Input Data</h3>
+            <form id="entry-form">
+                <div>
+                    <label for="nomor_tps">Nomor TPS:</label>
+                    <input type="text" id="nomor_tps" name="nomor_tps" required>
+                </div>
+                <div>
+                    <label for="jumlah_suara_sah">Jumlah Suara Sah:</label>
+                    <input type="number" id="jumlah_suara_sah" name="jumlah_suara_sah" required>
+                </div>
+                <div>
+                    <label for="jumlah_suara_tidak_sah">Jumlah Suara Tidak Sah:</label>
+                    <input type="number" id="jumlah_suara_tidak_sah" name="jumlah_suara_tidak_sah" required>
+                </div>
+                <button type="submit" class="submit-button">Submit Data</button>
+            </form>
+        </div>
     </div>
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.1.0/firebase-firestore-compat.js"></script>
 
-    <!-- JavaScript to fetch realname from cookies and Firestore data -->
+    <!-- JavaScript to handle data entry and display -->
     <script>
         // Firebase configuration
         const firebaseConfig = {
@@ -66,6 +87,49 @@
             // If no cookie is found, redirect back to the login page
             window.location.href = "index.html";
         }
+
+        // Function to toggle the display of the entry form
+        function toggleEntryForm() {
+            const formContainer = document.getElementById('entry-form-container');
+            if (formContainer.style.display === 'none') {
+                formContainer.style.display = 'block';
+            } else {
+                formContainer.style.display = 'none';
+            }
+        }
+
+        // Handle form submission and save data to Firestore
+        document.getElementById('entry-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Get values from form inputs
+            const nomor_tps = document.getElementById('nomor_tps').value;
+            const jumlah_suara_sah = document.getElementById('jumlah_suara_sah').value;
+            const jumlah_suara_tidak_sah = document.getElementById('jumlah_suara_tidak_sah').value;
+
+            try {
+                // Add new data to Firestore
+                await db.collection('suara').add({
+                    nomor_tps: nomor_tps,
+                    jumlah_suara_sah: jumlah_suara_sah,
+                    jumlah_suara_tidak_sah: jumlah_suara_tidak_sah,
+                    koordinator_saksi: realname, // Attach the user's realname from cookie
+                    waktu: firebase.firestore.FieldValue.serverTimestamp() // Store the time of submission
+                });
+
+                // Inform the user that the data was successfully saved
+                alert('Data successfully submitted!');
+
+                // Reset the form after submission
+                document.getElementById('entry-form').reset();
+
+                // Hide the form after submission
+                toggleEntryForm();
+            } catch (error) {
+                console.error('Error saving data to Firestore:', error);
+                alert('Failed to submit data. Please try again.');
+            }
+        });
     </script>
 </body>
 </html>
