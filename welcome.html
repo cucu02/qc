@@ -3,68 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager</title>
+    <title>Welcome Page</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="menu-icon">
-                <!-- Menu icon can be an SVG or FontAwesome icon -->
-                <i class="fas fa-bars"></i>
-            </div>
-            <div class="profile-image">
-                <!-- Profile picture or any SVG illustration -->
-                <img src="profile.png" alt="Profile Picture">
-            </div>
+    <div class="welcome-container">
+        <div class="profile-pic-container">
+            <img src="profile.jpg" alt="Profile Picture" class="profile-pic">
         </div>
-
-        <div class="task-section">
-            <div class="create-task">
-                <h2>Create New Task</h2>
-                <p>You can create new tasks here</p>
-                <button class="add-task-btn">+</button>
-            </div>
-
-            <div class="task-list">
-                <h3>Ongoing Task</h3>
-                <ul>
-                    <li>
-                        <div class="task-item">
-                            <div class="task-avatar">
-                                <img src="avatar1.png" alt="Avatar">
-                            </div>
-                            <div class="task-info">
-                                <p>Call with Jonathon Ruslan</p>
-                                <small>Jan 20, 2020 - 9 AM - 11 AM</small>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="task-item">
-                            <div class="task-avatar">
-                                <img src="avatar2.png" alt="Avatar">
-                            </div>
-                            <div class="task-info">
-                                <p>Meet with Vlad Ermakov</p>
-                                <small>Jan 21, 2020 - 9 AM - 10 AM</small>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="task-item">
-                            <div class="task-avatar">
-                                <img src="avatar3.png" alt="Avatar">
-                            </div>
-                            <div class="task-info">
-                                <p>Collaboration with Sam</p>
-                                <small>Jan 23, 2020 - 1 PM - 5 AM</small>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        <h1 class="welcome-message">Welcome, [Your Name]!</h1>
+        <button class="entry-button">Entry Data</button>
     </div>
 </body>
 </html>
